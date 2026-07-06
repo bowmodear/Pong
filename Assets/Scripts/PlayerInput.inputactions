@@ -3,7 +3,7 @@
     "name": "PlayerInput",
     "maps": [
         {
-            "name": "Player",
+            "name": "Player1",
             "id": "1d26294c-0922-4a2c-8b5b-653695f63190",
             "actions": [
                 {
@@ -52,7 +52,7 @@
                 },
                 {
                     "name": "1D Axis",
-                    "id": "5ee1d6e0-97a8-4205-966c-d6e2c06f9bdd",
+                    "id": "008127de-ee18-4bed-af85-3a52bbb33d11",
                     "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
@@ -63,7 +63,57 @@
                 },
                 {
                     "name": "negative",
-                    "id": "141d4fb0-5478-4c30-af22-bbd24038f531",
+                    "id": "ec8802cc-2efb-439f-ba7d-f18165c06e95",
+                    "path": "<Joystick>/stick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "ee0b9b14-c979-4384-b3ff-bb5b23cd1ac7",
+                    "path": "<Joystick>/stick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Player2",
+            "id": "94cc81f9-6ea4-4a51-a8e7-73a653144851",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "PassThrough",
+                    "id": "e567d878-f64d-4fd2-a904-bd291888a21a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "1D Axis",
+                    "id": "943c1cc5-d4de-4e51-a2b0-946af108b9ac",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "28a77cbc-154c-4b22-bde3-e8ac8fe46e97",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
@@ -74,8 +124,41 @@
                 },
                 {
                     "name": "positive",
-                    "id": "3012bcb6-823a-43e8-b8e6-4debbc08e30f",
+                    "id": "53ad28c0-50ef-4344-b9af-3b7d7f534308",
                     "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "7a5fefe9-9f45-40ff-ac7c-e2f6643b9478",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "0c27e066-9ebc-4338-8ba4-da955f97bb61",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "69f6c567-7d64-4278-92e4-301ef37235db",
+                    "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

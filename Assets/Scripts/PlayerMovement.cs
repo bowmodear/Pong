@@ -8,10 +8,10 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerInput = new PlayerInput();
-        playerInput.Player.Enable();
+        playerInput.Player1.Enable();
 
-        playerInput.Player.Move.performed += context => currentInput = context.ReadValue<float>();
-        playerInput.Player.Move.canceled += context => currentInput = 0f;
+        playerInput.Player1.Move.performed += context => currentInput = context.ReadValue<float>();
+        playerInput.Player1.Move.canceled += context => currentInput = 0f;
     }
 
     public float CurrentInput()

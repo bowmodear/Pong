@@ -24,4 +24,14 @@ public class Ball : MonoBehaviour
 
         rb.linearVelocity = new Vector2(xVelocity , yVelocity) * initialVelocity;
     }
+
+    public void ResetBall()
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;  //To make it stop spinning
+        
+        transform.position = Vector3.zero;
+        
+        BallDirection();
+    }
 }
