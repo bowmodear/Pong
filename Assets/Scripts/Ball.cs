@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
@@ -8,6 +9,12 @@ public class Ball : MonoBehaviour
     private void Start()
     {
         BallDirection();
+    }
+
+    private float SetVelocity(float difficultyVelocity)
+    {
+        initialVelocity = Mathf.Min(initialVelocity + difficultyVelocity, 15f);
+        return initialVelocity;
     }
 
     private void BallDirection()
@@ -31,7 +38,23 @@ public class Ball : MonoBehaviour
         rb.angularVelocity = 0f;  //To make it stop spinning
         
         transform.position = Vector3.zero;
-        
+        initialVelocity = 5f;
+
+        StartCoroutine(LaunchAfterDelay());
+    }
+
+    private IEnumerator LaunchAfterDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
         BallDirection();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<PlayerTag>(out var playerTag))
+        {
+            SetVelocity(difficultyVelocity:0.5f);
+            rb.linearVelocity = rb.linearVelocity.normalized * initialVelocity;  //Normalize makes the velocity equal to 1 while maintaining the direction then multiplying by the new velocity
+        }
     }
 }

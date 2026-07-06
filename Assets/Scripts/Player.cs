@@ -29,7 +29,5 @@ public class Player : MonoBehaviour
             newPosition.y = Mathf.Clamp(newPosition.y, bottomLimit, topLimit);
             transform.position = newPosition;
         }
-
-
     }
 }
