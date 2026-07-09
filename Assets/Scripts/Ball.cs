@@ -5,42 +5,43 @@ public class Ball : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float initialVelocity;
+    [SerializeField] private float newVelocity;
 
     private void Start()
     {
-        BallDirection();
+        newVelocity = initialVelocity;
     }
 
     private float SetVelocity(float difficultyVelocity)
     {
-        initialVelocity = Mathf.Min(initialVelocity + difficultyVelocity, 15f);
-        return initialVelocity;
+        newVelocity = Mathf.Min(newVelocity + difficultyVelocity, 15f);
+        return newVelocity;
     }
 
-    private void BallDirection()
+    public void BallDirection()
     {
-        float xVelocity = -1f;
-        bool isRight = UnityEngine.Random.value >= 0.5f;
-
-        if (isRight)
-        {
-            xVelocity = 1f;
-        }
+        bool isRight = Random.value >= 0.5f;
+        float xVelocity = isRight? 1f : -1f;  //This is so we can make it move every time horizontally with a consistent speed, if it was a Range it might be equal to 0 which won't make it move.
         
-        float yVelocity = UnityEngine.Random.Range(-1f, 1f);
+        float yVelocity = Random.Range(-1f, 1f);
 
         rb.linearVelocity = new Vector2(xVelocity , yVelocity) * initialVelocity;
     }
 
     public void ResetBall()
     {
+        StopBall();
+
+        StartCoroutine(LaunchAfterDelay());
+    }
+
+    public void StopBall()
+    {
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;  //To make it stop spinning
         
         transform.position = Vector3.zero;
-        initialVelocity = 5f;
-
-        StartCoroutine(LaunchAfterDelay());
+        newVelocity = initialVelocity;
     }
 
     private IEnumerator LaunchAfterDelay()
@@ -53,8 +54,7 @@ public class Ball : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<PlayerTag>(out var playerTag))
         {
-            SetVelocity(difficultyVelocity:0.5f);
-            rb.linearVelocity = rb.linearVelocity.normalized * initialVelocity;  //Normalize makes the velocity equal to 1 while maintaining the direction then multiplying by the new velocity
+            rb.linearVelocity = rb.linearVelocity.normalized * SetVelocity(difficultyVelocity:0.5f);  //Normalize makes the velocity equal to 1 while maintaining the direction then multiplying by the new velocity
         }
     }
 }
