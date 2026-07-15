@@ -73,4 +73,9 @@ public class GameUI : MonoBehaviour
         PlayerScoreManager.Instance.SwitchMode();
         AdjustSwitchModeText();
     }
+    
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
