@@ -63,4 +63,9 @@ public class Player : MonoBehaviour
             transform.position = newPosition;
         }
     }
+
+    public bool IsLeftPaddle()
+    {
+        return true;
+    }
 }

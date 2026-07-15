@@ -7,6 +7,7 @@ public class Ball : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private BallAudio ballAudio;
     [SerializeField] private float initialVelocity;
+    [SerializeField] private float maxCollisionAngle = 45f;
     [SerializeField] private float newVelocity;
     [SerializeField] private float minVerticalVelocity;
 
@@ -72,6 +73,35 @@ public class Ball : MonoBehaviour
         newVelocity = initialVelocity;
     }
 
+    private void AdjustAngle(PlayerTag playerTag, Collision2D collision)
+    {
+        Vector2 median = Vector2.zero;
+        foreach (ContactPoint2D contact in collision.contacts)
+        {
+            median += contact.point;
+            //Debug.DrawRay(contact.point, Vector3.right, Color.red, 2f);
+        }
+        median /= collision.contactCount;
+        //Debug.DrawRay(median, Vector3.right, Color.cyan, 2f);
+        //Debug.Break();
+        
+        //Calculate relative distance from center (between -1 and 1)
+        float absoluteDistanceFromCenter = median.y - transform.position.y;
+        float relativeDistanceFromCenter = absoluteDistanceFromCenter * 2 / playerTag.transform.localScale.y; //(Paddle Height)
+        
+        //Calculate the rotations using quaternions
+        int angleSign = (playerTag.GetComponent<Player>()?.IsLeftPaddle() == true) ? 1 : -1;
+        float angle = relativeDistanceFromCenter * maxCollisionAngle * angleSign;
+        Quaternion rot =  Quaternion.AngleAxis(angle, Vector3.forward);
+        //Debug.DrawRay(median, Vector3.forward, Color.green,2f);
+        
+        //Calculate direction / velocity
+        Vector2 dir = (playerTag.GetComponent<Player>()?.IsLeftPaddle() == true) ? Vector2.right : Vector2.left;
+        Vector2 velocity = rot * dir * rb.linearVelocity.magnitude;
+        rb.linearVelocity = velocity;
+        //Debug.DrawRay(median, velocity, Color.yellow,2f);
+    }
+
     private IEnumerator LaunchAfterDelay()
     {
         yield return new WaitForSeconds(0.5f);
@@ -84,6 +114,7 @@ public class Ball : MonoBehaviour
         {
             ballAudio.PlayPaddleHitSound();
             rb.linearVelocity = rb.linearVelocity.normalized * SetVelocity(difficultyVelocity:1.5f);  //Normalize makes the velocity equal to 1 while maintaining the direction then multiplying by the new velocity
+            AdjustAngle(playerTag, collision);
         }
 
         if (collision.gameObject.TryGetComponent<WallTag>(out var wallTag))
