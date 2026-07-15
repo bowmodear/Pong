@@ -8,15 +8,29 @@ public class Ball : MonoBehaviour
     [SerializeField] private BallAudio ballAudio;
     [SerializeField] private float initialVelocity;
     [SerializeField] private float newVelocity;
+    [SerializeField] private float minVerticalVelocity;
 
     private void Start()
     {
         newVelocity = initialVelocity;
     }
+    
+    private void FixedUpdate()
+    {
+        Vector2 currentVelocity = rb.linearVelocity;
+        
+        if (currentVelocity.magnitude > 0 && Mathf.Abs(currentVelocity.y) < minVerticalVelocity)
+        {
+            float sign = (currentVelocity.y >= 0) ? 1f : -1f;
+            currentVelocity.y = minVerticalVelocity * sign;
+
+            rb.linearVelocity = currentVelocity.normalized * currentVelocity.magnitude;
+        }
+    }
 
     private float SetVelocity(float difficultyVelocity)
     {
-        newVelocity = Mathf.Min(newVelocity + difficultyVelocity, 15f);
+        newVelocity = Mathf.Min(newVelocity + difficultyVelocity, 30f);
         return newVelocity;
     }
 
@@ -28,6 +42,18 @@ public class Ball : MonoBehaviour
         float yVelocity = Random.Range(-1f, 1f);
 
         rb.linearVelocity = new Vector2(xVelocity , yVelocity) * initialVelocity;
+    }
+
+    public bool IsMovingRight()
+    {
+        if (rb.linearVelocity.x > 0f)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void ResetBall()
@@ -57,7 +83,7 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.TryGetComponent<PlayerTag>(out var playerTag))
         {
             ballAudio.PlayPaddleHitSound();
-            rb.linearVelocity = rb.linearVelocity.normalized * SetVelocity(difficultyVelocity:0.5f);  //Normalize makes the velocity equal to 1 while maintaining the direction then multiplying by the new velocity
+            rb.linearVelocity = rb.linearVelocity.normalized * SetVelocity(difficultyVelocity:1.5f);  //Normalize makes the velocity equal to 1 while maintaining the direction then multiplying by the new velocity
         }
 
         if (collision.gameObject.TryGetComponent<WallTag>(out var wallTag))

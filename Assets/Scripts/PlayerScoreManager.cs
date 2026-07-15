@@ -15,14 +15,22 @@ public class PlayerScoreManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI player2Text;
     
     [Header("Ball")]
-    [SerializeField] private Ball ball;
+    public Ball ball;
 
     [SerializeField] private GameUI gameUI;
     public GameAudio gameAudio;
+    public PlayMode playMode;
     
     [SerializeField] private int player1Score = 0;
     [SerializeField] private int player2Score = 0;
     [SerializeField] private int winScore = 5;
+
+    public enum PlayMode
+    {
+        PlayerVsPlayer,
+        PlayerVsAi,
+        AiVsAi
+    }
     
     private void Awake()
     {
@@ -101,6 +109,22 @@ public class PlayerScoreManager : MonoBehaviour
         {
             ball.ResetBall();
             gameAudio.PlayScoreSound();
+        }
+    }
+
+    public void SwitchMode()
+    {
+        switch (playMode)
+        {
+            case PlayMode.PlayerVsPlayer:
+                playMode = PlayMode.PlayerVsAi;
+                break;
+            case PlayMode.PlayerVsAi:
+                playMode = PlayMode.AiVsAi;
+                break;
+            case PlayMode.AiVsAi:
+                playMode = PlayMode.PlayerVsPlayer;
+                break;
         }
     }
 }
