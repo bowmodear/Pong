@@ -4,6 +4,8 @@ using TMPro;
 
 public class PlayerScoreManager : MonoBehaviour
 {
+    public static PlayerScoreManager Instance { get; private set; }
+    
     [Header("Triggers")]
     [SerializeField] private GoalTrigger player1Trigger;
     [SerializeField] private GoalTrigger player2Trigger;
@@ -16,10 +18,23 @@ public class PlayerScoreManager : MonoBehaviour
     [SerializeField] private Ball ball;
 
     [SerializeField] private GameUI gameUI;
+    public GameAudio gameAudio;
     
     [SerializeField] private int player1Score = 0;
     [SerializeField] private int player2Score = 0;
     [SerializeField] private int winScore = 5;
+    
+    private void Awake()
+    {
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this); 
+        } 
+        else 
+        { 
+            Instance = this; 
+        } 
+    }
 
     //This automatically runs when any trigger fires its event
     private void HandleGoal(GoalSide sideHit)
@@ -80,10 +95,12 @@ public class PlayerScoreManager : MonoBehaviour
         if (winnerId != 0)
         {
             gameUI.OnGameEnd(winnerId);
+            gameAudio.PlayWinSound();
         }
         else
         {
             ball.ResetBall();
+            gameAudio.PlayScoreSound();
         }
     }
 }

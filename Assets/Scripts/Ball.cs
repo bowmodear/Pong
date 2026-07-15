@@ -1,9 +1,11 @@
 using System.Collections;
+using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private BallAudio ballAudio;
     [SerializeField] private float initialVelocity;
     [SerializeField] private float newVelocity;
 
@@ -54,7 +56,13 @@ public class Ball : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<PlayerTag>(out var playerTag))
         {
+            ballAudio.PlayPaddleHitSound();
             rb.linearVelocity = rb.linearVelocity.normalized * SetVelocity(difficultyVelocity:0.5f);  //Normalize makes the velocity equal to 1 while maintaining the direction then multiplying by the new velocity
+        }
+
+        if (collision.gameObject.TryGetComponent<WallTag>(out var wallTag))
+        {
+            ballAudio.PlayWallHitSound();
         }
     }
 }
