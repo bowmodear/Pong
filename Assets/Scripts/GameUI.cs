@@ -11,6 +11,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] private PlayerScoreManager playerScoreManager;
     [SerializeField] private TextMeshProUGUI volumeValueText;
     [SerializeField] private TextMeshProUGUI switchModeText;
+    [SerializeField] private CursorManager cursorManager;
     
     private void Start()
     {
@@ -18,12 +19,13 @@ public class GameUI : MonoBehaviour
         AdjustSwitchModeText();
     }
 
-    private void StopGame()
+    public void StopGame()
     {
         menuObject.SetActive(true);
         if(player1 != null) player1.enabled = false;
         if (player2 != null) player2.enabled = false;
         if(ball != null) ball.StopBall();
+        cursorManager.ShowCursor();
     }
 
     private void ResumeGame()
@@ -37,6 +39,7 @@ public class GameUI : MonoBehaviour
     public void OnStartGameButtonClicked()
     {
         ResumeGame();
+        cursorManager.HideCursor();
         playerScoreManager.ResetScore();
     }
 

@@ -30,7 +30,7 @@ public class Ball : MonoBehaviour
 
     private float SetVelocity(float difficultyVelocity)
     {
-        newVelocity = Mathf.Min(newVelocity + difficultyVelocity, 30f);
+        newVelocity = Mathf.Min(newVelocity + difficultyVelocity, 100f);
         return newVelocity;
     }
 

@@ -96,7 +96,7 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -165,6 +165,34 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Pause",
+            "id": "711bdfd1-dde7-4180-8cc7-dc54dbe311a3",
+            "actions": [
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "19df02e5-fde4-4a2e-9ee8-b1e513929c34",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9c6198eb-bada-4de1-a641-5498ef00ac08",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

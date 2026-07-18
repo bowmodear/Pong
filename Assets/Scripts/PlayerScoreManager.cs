@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using UnityEngine;
 using TMPro;
 
@@ -18,6 +17,7 @@ public class PlayerScoreManager : MonoBehaviour
     public Ball ball;
 
     [SerializeField] private GameUI gameUI;
+    [SerializeField] private EscapeButton escapeButton;
     public GameAudio gameAudio;
     public PlayMode playMode;
     
@@ -64,6 +64,7 @@ public class PlayerScoreManager : MonoBehaviour
     {
         if (player1Trigger != null) player1Trigger.OnBallEntered += HandleGoal;
         if (player2Trigger != null) player2Trigger.OnBallEntered += HandleGoal;
+        if(escapeButton != null) escapeButton.OnEscapePressed += PauseGame;
     }
 
     //Unsubscribe from the event when the script turns off
@@ -71,6 +72,7 @@ public class PlayerScoreManager : MonoBehaviour
     {
         if (player1Trigger != null) player1Trigger.OnBallEntered -= HandleGoal;
         if (player2Trigger != null) player2Trigger.OnBallEntered -= HandleGoal;
+        if(escapeButton != null) escapeButton.OnEscapePressed -= PauseGame;
     }
 
     private void AddScore(int playerId)
@@ -126,5 +128,10 @@ public class PlayerScoreManager : MonoBehaviour
                 playMode = PlayMode.PlayerVsPlayer;
                 break;
         }
+    }
+
+    public void PauseGame()
+    {
+        gameUI.StopGame();
     }
 }

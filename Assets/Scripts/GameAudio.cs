@@ -6,7 +6,7 @@ public class GameAudio : MonoBehaviour
 
     [SerializeField] private AudioClip scoreSound;
     [SerializeField] private AudioClip winSound;
-    
+    [SerializeField] private AudioClip clickSound;
 
     public void PlayScoreSound()
     {
@@ -16,5 +16,10 @@ public class GameAudio : MonoBehaviour
     public void PlayWinSound()
     {
         audioSource.PlayOneShot(winSound);
+    }
+
+    public void PlayClickSound()
+    {
+        audioSource.PlayOneShot(clickSound);
     }
 }
